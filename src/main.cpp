@@ -2,8 +2,8 @@
 
 #include <chrono>
 
-#include "bfs_sequential.cpp"
 #include "graph.h"
+#include "bfs_sequential.cpp"
 #include "mpi_frontier.cpp"
 #include "mpi_vertex_dist.cpp"
 #include "utils.h"
@@ -108,13 +108,8 @@ int main(int argc, char *argv[]) {
   graph_t *graph = read_graph(filename, my_rank);
   auto t2 = Time::now();
 
-  if (filename.find("/") >= 0) {
-    filename = filename.substr(filename.rfind("/") + 1);
-  }
-
-  if (my_rank == 0) {
-    printf("Loading %s took %ld us\n\n", filename.c_str(), chrono::duration_cast<us>(t2 - t1).count());
-  }
+  if (filename.find("/") >= 0) filename = filename.substr(filename.rfind("/") + 1);
+  if (my_rank == 0) printf("Loading %s took %ld us\n\n", filename.c_str(), chrono::duration_cast<us>(t2 - t1).count());
   MPI_Barrier(MPI_COMM_WORLD);
 
   if (METHOD == -1) {
