@@ -19,15 +19,13 @@ int bfs_queue(graph_t *graph, int start_vertex, int *result) {
     int vertex = next_vertices.front();
     next_vertices.pop();
 
-    for (int n = graph->v_adj_begin[vertex];
-         n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
+    for (int n = graph->v_adj_begin[vertex]; n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
       int neighbor = graph->v_adj_list[n];
 
       if (!visited[neighbor]) {
         visited[neighbor] = true;
         result[neighbor] = result[vertex] + 1;
-        if (result[neighbor] > max_depth)
-          max_depth = result[neighbor];
+        if (result[neighbor] > max_depth) max_depth = result[neighbor];
         next_vertices.push(neighbor);
       }
     }
@@ -53,9 +51,7 @@ int bfs_naive(graph_t *graph, int start_vertex, int *result) {
 
     for (int vertex = 0; vertex < num_vertices; vertex++) {
       if (result[vertex] == depth) {
-        for (int n = graph->v_adj_begin[vertex];
-             n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex];
-             n++) {
+        for (int n = graph->v_adj_begin[vertex]; n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
           int neighbor = graph->v_adj_list[n];
 
           if (result[neighbor] > depth + 1) {
@@ -69,7 +65,7 @@ int bfs_naive(graph_t *graph, int start_vertex, int *result) {
     depth++;
   }
 
-  // print_result(graph, result, depth);
+  print_result(graph, result, depth);
   return std::chrono::duration_cast<us>(Time::now() - start_time).count();
 }
 
@@ -94,8 +90,7 @@ int bfs_frontier(graph_t *graph, int start_vertex, int *result) {
     for (int v = 0; v < front_in_size; v++) {
       int vertex = frontier_in[v];
 
-      for (int n = graph->v_adj_begin[vertex];
-           n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
+      for (int n = graph->v_adj_begin[vertex]; n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
         int neighbor = graph->v_adj_list[n];
 
         if (result[neighbor] > depth + 1) {
