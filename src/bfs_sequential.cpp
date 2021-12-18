@@ -1,3 +1,5 @@
+#include "utils.h"
+
 int bfs_queue(graph_t *graph, int start_vertex, int *result) {
   int num_vertices = graph->num_vertices;
   bool *visited = new bool[num_vertices];

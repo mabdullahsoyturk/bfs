@@ -1,3 +1,5 @@
+#include "utils.h"
+
 int mpi_frontier(graph_t* graph, int start_vertex, int* result){
     int num_vertices = graph->num_vertices; 
     fill_n(result, num_vertices, MAX_DIST);

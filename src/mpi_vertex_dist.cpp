@@ -1,3 +1,5 @@
+#include "utils.h"
+
 int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result)
 {
     int num_vertices = graph->num_vertices; 
