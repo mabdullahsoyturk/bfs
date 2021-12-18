@@ -79,8 +79,7 @@ void run_all_mpi(graph_t *graph, int start_vertex, string filename, int my_rank,
     double avg_runtime = runtime[i] / (range_to - range_from);
 
     if (!wrong_result[i]) {
-      if (my_rank == 0)
-        printf("%s,%s,total=%ld,avg=%f\n", filename.c_str(), bfs_names[i].c_str(), runtime[i], avg_runtime);
+      if (my_rank == 0) printf("%s,%s,total=%ld,avg=%f\n", filename.c_str(), bfs_names[i].c_str(), runtime[i], avg_runtime);
     } else {
       if (my_rank == 0) printf("%s,%s,WRONG_RESULT\n", filename.c_str(), bfs_names[i].c_str());
     }
@@ -127,9 +126,7 @@ int main(int argc, char *argv[]) {
 
       // double avg_runtime = runtime[i] / (range_to - range_from);
       printf("%s took %d us on processor %d\n", bfs_names[METHOD].c_str(), next_runtime, my_rank);
-      if (my_rank == 0 && next_runtime > 0 && num_proc > 1)
-        printf("%s + synchronization took %ld us on all processors\n", bfs_names[METHOD].c_str(),
-               chrono::duration_cast<us>(t2 - t1).count());
+      if (my_rank == 0 && next_runtime > 0 && num_proc > 1) printf("%s + synchronization took %ld us on all processors\n", bfs_names[METHOD].c_str(), chrono::duration_cast<us>(t2 - t1).count());
     }
   }
 

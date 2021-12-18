@@ -15,8 +15,7 @@ graph_t *read_graph(string filename, int my_rank) {
   int next_index = 0;
   string line;
   // skip the comments, num vertices and edges line
-  while (infile.get() == '%')
-    getline(infile, line);
+  while (infile.get() == '%') getline(infile, line);
   getline(infile, line);
 
   while (infile >> from >> to) {
@@ -33,16 +32,13 @@ graph_t *read_graph(string filename, int my_rank) {
 
   int num_vertices = next_index;
 
-  if (my_rank == 0)
-    printf("Input file has %d vertices and %i edges\n", num_vertices,
-           num_edges);
+  if (my_rank == 0) printf("Input file has %d vertices and %i edges\n", num_vertices, num_edges);
 
   // Build adajacency lists (still reading file)
   infile.clear();
   infile.seekg(0, ios::beg);
   // skip the comments, num vertices and edges line
-  while (infile.get() == '%')
-    getline(infile, line);
+  while (infile.get() == '%') getline(infile, line);
   getline(infile, line);
 
   int *v_adj_begin = new int[num_vertices];
@@ -71,8 +67,7 @@ graph_t *read_graph(string filename, int my_rank) {
   double degree_variance = 0.0;
 
   for (int i = 0; i < num_vertices; i++) {
-    degree_variance += (avg_degree - v_adj_lists[i].size()) *
-                       (avg_degree - v_adj_lists[i].size());
+    degree_variance += (avg_degree - v_adj_lists[i].size()) * (avg_degree - v_adj_lists[i].size());
   }
   degree_variance /= num_vertices;
 
@@ -87,9 +82,7 @@ graph_t *read_graph(string filename, int my_rank) {
 
   // sort(degs, degs + num_vertices);
 
-  if (my_rank == 0)
-    printf("avg deg = %f, deg stddev = %f, median = %i\n", avg_degree,
-           degree_stddev, degs[num_vertices / 2]);
+  if (my_rank == 0) printf("avg deg = %f, deg stddev = %f, median = %i\n", avg_degree, degree_stddev, degs[num_vertices / 2]);
 
   /*
   printf("Histogram for Vertex Degrees\n");
@@ -116,8 +109,7 @@ graph_t *read_graph(string filename, int my_rank) {
     v_adj_begin[i] = next_offset;
     v_adj_length[i] = list_size;
 
-    memcpy(v_adj_list + next_offset, &v_adj_lists[i][0],
-           list_size * sizeof(int));
+    memcpy(v_adj_list + next_offset, &v_adj_lists[i][0], list_size * sizeof(int));
     next_offset += list_size;
   }
 
