@@ -71,6 +71,10 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
   } else {
     MPI_Scatterv(NULL, NULL, NULL, MPI_INT, v_adj_list, edge_recv_size, MPI_INT, 0, MPI_COMM_WORLD);
   }
+
+  /*for(int i = 0; i < vertex_recv_size; i++) {
+    printf("Rank: %d, v_adj_begin[%d]: %d, v_adj_length[%d]: %d, v_adj_list[%d]: %d\n", rank, i, v_adj_begin[i], i, v_adj_length[i], i, v_adj_list[i]);
+  }*/
   
   /*
     After distrubiton process 0 has:
