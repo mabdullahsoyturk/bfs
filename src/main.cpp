@@ -1,7 +1,5 @@
 #include <mpi.h>
-
 #include <chrono>
-
 #include "graph.h"
 #include "bfs_sequential.cpp"
 #include "mpi_frontier.cpp"

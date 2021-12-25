@@ -113,6 +113,18 @@ graph_t *read_graph(string filename, int my_rank) {
     next_offset += list_size;
   }
 
+  /*for(int i = 0; i < num_vertices; i++) {
+    printf("v_adj_begin[%d]: %d\n", i, v_adj_begin[i]);
+  }
+
+  for(int i = 0; i < num_vertices; i++) {
+    printf("v_adj_length[%d]: %d\n", i, v_adj_length[i]);
+  }
+
+  for(int i = 0; i < num_edges; i++) {
+    printf("v_adj_list[%d]: %d\n", i, v_adj_list[i]);
+  }*/
+
   graph_t *graph = new graph_t;
   graph->v_adj_list = v_adj_list;
   graph->v_adj_begin = v_adj_begin;
