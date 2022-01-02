@@ -27,19 +27,21 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
 
     int my_start_vertex;
     int my_end_vertex;
-    if(my_rank != num_proc - 1) {
+    if (my_rank != num_proc - 1) {
         my_start_vertex = my_rank * ((num_vertices / num_proc) + 1);
         my_end_vertex = (my_rank + 1) * ((num_vertices / num_proc) + 1);
-    }else {
+        //printf("Rank: %d, start vertex: %d, end vertex: %d\n", my_rank, my_start_vertex, my_end_vertex);
+    } else {
         my_start_vertex = my_rank * ((num_vertices / num_proc) + 1);
         my_end_vertex = num_vertices;
+        //printf("Rank: %d, start vertex: %d, end vertex: %d\n", my_rank, my_start_vertex, my_end_vertex);
     }
 
     while (keep_going) {
         keep_going = false;
 
-        for (int vertex = my_start_vertex; vertex < my_end_vertex; vertex++) {
-            if (result[vertex] == depth) {
+        for (int vertex = 0; vertex < num_vertices; vertex++) {
+            if (result[vertex] == depth && vertex >= my_start_vertex && vertex < my_end_vertex) {
                 for (int n = graph->v_adj_begin[vertex]; n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
                     int neighbor = graph->v_adj_list[n];
 
@@ -49,8 +51,19 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
                     }
                 }
             }
+
+            printf("Rank: %d, Vertex: %d\n", my_rank, vertex);
+
+            MPI_Allreduce(MPI_IN_PLACE, result, num_vertices, MPI_INT, MPI_MIN, MPI_COMM_WORLD);
+            MPI_Barrier(MPI_COMM_WORLD);
+
+            /*if(my_rank == 0) {
+              MPI_Send(result, num_vertices, MPI_INT, 1, 0, MPI_COMM_WORLD);
+            }else {
+              MPI_Recv(result, num_vertices, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); 
+            }*/
         }
-        
+
         depth++;
     }
 
