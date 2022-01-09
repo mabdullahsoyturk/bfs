@@ -65,7 +65,7 @@ int bfs_naive(graph_t *graph, int start_vertex, int *result) {
     depth++;
   }
 
-  print_result(graph, result, depth);
+  // print_result(graph, result, depth);
   return std::chrono::duration_cast<us>(Time::now() - start_time).count();
 }
 

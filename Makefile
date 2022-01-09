@@ -6,6 +6,7 @@ build: $(TARGET)
 
 bfs: src/main.cpp src/graph.cpp src/utils.cpp
 	$(CC) $^ -o $@ -I$(INCLUDE)
+	cp $(TARGET) bin
 
 run:
 	./bfs graphs/test.mtx 0 1 1
