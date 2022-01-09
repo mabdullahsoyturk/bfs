@@ -27,9 +27,9 @@ int run_bfs(bfs_func func, graph_t *graph, int start_vertex, int *expected, int 
         runtime = min(next_time, runtime);
 
         if (!equal(result, result + graph->num_vertices, expected)) {
-            for (int m = 0; m < graph->num_vertices; m++) {
+            /*for (int m = 0; m < graph->num_vertices; m++) {
                 if (expected[m] != result[m]) printf("%d: %d vs %d\n", m, expected[m], result[m]);
-            }
+            }*/
             // Wrong result
             return -1;
         }

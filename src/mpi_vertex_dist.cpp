@@ -1,5 +1,3 @@
-#include <mpi.h>
-
 #include "utils.h"
 
 int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
@@ -32,10 +30,11 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
         my_end_vertex = num_vertices;
     }
 
+    printf("Rank: %d, my_start_vertex: %d, my_end_vertex: %d\n", my_rank, my_start_vertex, my_end_vertex);
+
     while (keep_going) {
         keep_going = false;
 
-        int *num_sends = new int[num_ranks];
         std::vector<int> send_indices;
 
         for (int vertex = my_start_vertex; vertex < my_end_vertex; vertex++) {
@@ -58,10 +57,11 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
             depths[i] = result[send_indices[i]];
         }
 
+        int num_sends[num_ranks];
         MPI_Allgather(&num_send, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
+        
         int recv_size = 0;
-
-        int *displs = new int[num_ranks];
+        int displs[num_ranks];
         for(int i = 0; i < num_ranks; i++) {
             displs[i] = recv_size;
             recv_size += num_sends[i];
@@ -71,6 +71,7 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
         int *recv_depths = new int[recv_size];
         MPI_Allgatherv(send_indices.data(), num_send, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
         MPI_Allgatherv(depths, num_send, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
+        MPI_Barrier(MPI_COMM_WORLD);
 
         for(int i = 0; i < recv_size; i++) {
             result[recv_indices[i]] = recv_depths[i];
@@ -79,8 +80,6 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
         MPI_Allreduce(MPI_IN_PLACE, &keep_going, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
         MPI_Barrier(MPI_COMM_WORLD);
 
-        delete[] num_sends;
-        delete[] displs;
         delete[] recv_indices;
         delete[] recv_depths;
 

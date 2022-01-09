@@ -4,6 +4,7 @@
 #include <chrono>
 #include <iostream>
 #include <queue>
+#include <mpi.h>
 
 #define MAX_INT 1073741824
 #define MAX_DIST MAX_INT
