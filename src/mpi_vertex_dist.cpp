@@ -58,14 +58,7 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
             depths[i] = result[send_indices[i]];
         }
 
-        //printf("My Rank: %d, num_send: %d\n", my_rank, num_send);
-
-        //printf("Rank: %d, Before num_send all gather\n", my_rank);
         MPI_Allgather(&num_send, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
-        /*for(int i = 0; i < num_ranks; i++) {
-            printf("Rank: %d, num_send: %d\n", i, num_sends[i]);
-        }*/
-        //printf("Rank: %d, After num_send all gather\n", my_rank);
         int recv_size = 0;
 
         int *displs = new int[num_ranks];
@@ -83,7 +76,6 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
             result[recv_indices[i]] = recv_depths[i];
         }
     
-        //MPI_Allreduce(MPI_IN_PLACE, result, num_vertices, MPI_INT, MPI_MIN, MPI_COMM_WORLD);
         MPI_Allreduce(MPI_IN_PLACE, &keep_going, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
         MPI_Barrier(MPI_COMM_WORLD);
 
