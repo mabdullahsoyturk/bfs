@@ -23,7 +23,7 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
     front_out_size = 0;
 
     int my_start_vertex, my_end_vertex;
-    if(front_in_size < num_ranks) {
+    if(front_in_size <= num_ranks) {
         if(my_rank < front_in_size) {
             my_start_vertex = my_rank;
             my_end_vertex = my_rank + 1;
@@ -42,12 +42,14 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
           my_end_vertex = front_in_size;
       }
     }
-    //printf("Rank: %d, front_in_size: %d, my_start_vertex: %d, my_end_vertex: %d\n", my_rank, front_in_size, my_start_vertex, my_end_vertex);
-    //MPI_Barrier(MPI_COMM_WORLD);
+    printf("Rank: %d, front_in_size: %d, my_start_vertex: %d, my_end_vertex: %d\n", my_rank, front_in_size, my_start_vertex, my_end_vertex);
+    MPI_Barrier(MPI_COMM_WORLD);
 
     std::vector<int> send_indices;
     for (int v = my_start_vertex; v < my_end_vertex; v++) {
       int vertex = frontier_in[v];
+
+      printf("Rank: %d, frontier: %d\n", my_rank, vertex);
 
       for (int n = graph->v_adj_begin[vertex]; n < graph->v_adj_begin[vertex] + graph->v_adj_length[vertex]; n++) {
         int neighbor = graph->v_adj_list[n];
@@ -76,11 +78,11 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
         printf("Rank: %d, after allgather num_send: %d\n", i, num_sends[i]);
     }*/
 
-    /*printf("send_indices size: %ld\n", send_indices.size());
-    for(int i = 0; i < send_indices.size(); i++) {
+    //printf("send_indices size: %ld\n", send_indices.size());
+    /*for(int i = 0; i < send_indices.size(); i++) {
         printf("Rank: %d, indice to send: %d\n", my_rank, send_indices[i]);
-    }
-    MPI_Barrier(MPI_COMM_WORLD);*/
+    }*/
+    MPI_Barrier(MPI_COMM_WORLD);
     
     int recv_size = 0;
     int displs[num_ranks];
@@ -115,6 +117,9 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
     delete[] recv_indices;
     delete[] recv_depths;
   }
+
+  delete[] frontier_in;
+  delete[] frontier_out; 
 
   return std::chrono::duration_cast<us>(Time::now() - start_time).count();
 }
