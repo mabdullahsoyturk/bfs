@@ -32,7 +32,7 @@ graph_t *read_graph(string filename, int my_rank) {
 
     int num_vertices = next_index;
 
-    if (my_rank == 0) printf("Input file has %d vertices and %i edges\n", num_vertices, num_edges);
+    // if (my_rank == 0) printf("Input file has %d vertices and %i edges\n", num_vertices, num_edges);
 
     // Build adajacency lists (still reading file)
     infile.clear();
@@ -82,7 +82,7 @@ graph_t *read_graph(string filename, int my_rank) {
 
     // sort(degs, degs + num_vertices);
 
-    if (my_rank == 0) printf("avg deg = %f, deg stddev = %f, median = %i\n", avg_degree, degree_stddev, degs[num_vertices / 2]);
+    // if (my_rank == 0) printf("avg deg = %f, deg stddev = %f, median = %i\n", avg_degree, degree_stddev, degs[num_vertices / 2]);
 
     /*
     printf("Histogram for Vertex Degrees\n");

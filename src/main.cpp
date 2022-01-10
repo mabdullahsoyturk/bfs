@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
     auto t2 = Time::now();
 
     if (filename.find("/") >= 0) filename = filename.substr(filename.rfind("/") + 1);
-    if (my_rank == 0) printf("Loading %s took %ld us\n\n", filename.c_str(), chrono::duration_cast<us>(t2 - t1).count());
+    // if (my_rank == 0) printf("Loading %s took %ld us\n\n", filename.c_str(), chrono::duration_cast<us>(t2 - t1).count());
     MPI_Barrier(MPI_COMM_WORLD);
 
     if (METHOD == -1) {

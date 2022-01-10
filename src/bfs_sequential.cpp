@@ -31,8 +31,9 @@ int bfs_queue(graph_t *graph, int start_vertex, int *result) {
     }
   }
 
-  // print_result(graph, result, max_depth+1);
-  return std::chrono::duration_cast<us>(Time::now() - start_time).count();
+  auto time = std::chrono::duration_cast<us>(Time::now() - start_time).count();
+  delete[] visited;
+  return time;
 }
 
 int bfs_naive(graph_t *graph, int start_vertex, int *result) {
@@ -108,6 +109,10 @@ int bfs_frontier(graph_t *graph, int start_vertex, int *result) {
     depth++;
   }
 
-  // print_result(graph, result, depth);
+  auto time = std::chrono::duration_cast<us>(Time::now() - start_time).count();
+
+  delete[] frontier_in;
+  delete[] frontier_out;
+
   return std::chrono::duration_cast<us>(Time::now() - start_time).count();
 }

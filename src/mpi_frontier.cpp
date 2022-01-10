@@ -18,6 +18,9 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
   int front_in_size = 1;
   int front_out_size = 0;
 
+  int num_sends[num_ranks];
+  int displs[num_ranks];
+
   auto start_time = Time::now();
 
   int depth = 0;
@@ -66,26 +69,34 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
       }
     }
 
-    int num_sends[num_ranks];
     MPI_Allgather(&front_out_size, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
-    
-    int recv_size = 0;
-    int displs[num_ranks];
+
+    bool send = false;
+
     for(int i = 0; i < num_ranks; i++) {
-        displs[i] = recv_size;
-        recv_size += num_sends[i];
+        if(num_sends[i] != 0) {
+            send = true;
+        }
     }
 
-    MPI_Allgatherv(send_indices.data(), front_out_size, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-    MPI_Allgatherv(depths.data(), front_out_size, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-    MPI_Barrier(MPI_COMM_WORLD);
+    if(send) {
+      int recv_size = 0;
+      for(int i = 0; i < num_ranks; i++) {
+          displs[i] = recv_size;
+          recv_size += num_sends[i];
+      }
 
-    front_out_size = recv_size;
-  
-    for(int i = 0; i < recv_size; i++) {
-        result[recv_indices[i]] = recv_depths[i];
-        frontier_out[i] = recv_indices[i];
+      MPI_Allgatherv(send_indices.data(), front_out_size, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
+      MPI_Allgatherv(depths.data(), front_out_size, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
+      MPI_Barrier(MPI_COMM_WORLD);
+
+      front_out_size = recv_size;
+    
+      for(int i = 0; i < recv_size; i++) {
+          result[recv_indices[i]] = recv_depths[i];
+          frontier_out[i] = recv_indices[i];
+      }
     }
 
     front_in_size = front_out_size;
@@ -95,5 +106,13 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
     depth++;
   }
 
-  return std::chrono::duration_cast<us>(Time::now() - start_time).count();
+  auto time = std::chrono::duration_cast<us>(Time::now() - start_time).count();
+
+  // Free
+  delete[] recv_indices;
+  delete[] recv_depths;
+  delete[] frontier_in;
+  delete[] frontier_out;
+
+  return time;
 }
