@@ -70,7 +70,7 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
     }
 
     MPI_Allgather(&front_out_size, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
-    MPI_Barrier(MPI_COMM_WORLD);
+    // MPI_Barrier(MPI_COMM_WORLD);
 
     bool send = false;
 
@@ -89,7 +89,7 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
 
       MPI_Allgatherv(send_indices.data(), front_out_size, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
       MPI_Allgatherv(depths.data(), front_out_size, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-      MPI_Barrier(MPI_COMM_WORLD);
+      // MPI_Barrier(MPI_COMM_WORLD);
 
       front_out_size = recv_size;
     

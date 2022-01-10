@@ -60,7 +60,7 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
 
         int num_send = send_indices.size();
         MPI_Allgather(&num_send, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
-        MPI_Barrier(MPI_COMM_WORLD);
+        //MPI_Barrier(MPI_COMM_WORLD);
         
         bool send = false;
 
@@ -79,14 +79,14 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
 
             MPI_Allgatherv(send_indices.data(), num_send, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
             MPI_Allgatherv(depths.data(), num_send, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-            MPI_Barrier(MPI_COMM_WORLD);
+            //MPI_Barrier(MPI_COMM_WORLD);
 
             for(int i = 0; i < recv_size; i++) {
                 result[recv_indices[i]] = recv_depths[i];
             }
         
             MPI_Allreduce(MPI_IN_PLACE, &keep_going, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD);
-            MPI_Barrier(MPI_COMM_WORLD);
+            //MPI_Barrier(MPI_COMM_WORLD);
         }
 
         depth++;
