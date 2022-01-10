@@ -30,7 +30,7 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
         my_end_vertex = num_vertices;
     }
 
-    printf("Rank: %d, my_start_vertex: %d, my_end_vertex: %d\n", my_rank, my_start_vertex, my_end_vertex);
+    // printf("Rank: %d, my_start_vertex: %d, my_end_vertex: %d\n", my_rank, my_start_vertex, my_end_vertex);
 
     while (keep_going) {
         keep_going = false;
@@ -59,6 +59,7 @@ int mpi_vertex_dist(graph_t *graph, int start_vertex, int *result) {
 
         int num_sends[num_ranks];
         MPI_Allgather(&num_send, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
+        MPI_Barrier(MPI_COMM_WORLD);
         
         int recv_size = 0;
         int displs[num_ranks];

@@ -3,11 +3,14 @@
 int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
   int num_vertices = graph->num_vertices;
   fill_n(result, num_vertices, MAX_DIST);
+  
+  int my_rank, num_ranks;
+  int my_start_vertex, my_end_vertex;
+  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &num_ranks);
 
-  auto start_time = Time::now();
-
-  int depth = 0;
-  result[start_vertex] = depth;
+  int *recv_indices = new int[num_vertices];
+  int *recv_depths = new int[num_vertices];
 
   int* frontier_in = new int[num_vertices];
   int* frontier_out = new int[num_vertices];
@@ -15,14 +18,14 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
   int front_in_size = 1;
   int front_out_size = 0;
 
-  int my_rank, num_ranks;
-  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  MPI_Comm_size(MPI_COMM_WORLD, &num_ranks);
+  auto start_time = Time::now();
+
+  int depth = 0;
+  result[start_vertex] = depth;
 
   while (front_in_size != 0) {
     front_out_size = 0;
 
-    int my_start_vertex, my_end_vertex;
     if(front_in_size <= num_ranks) {
         if(my_rank < front_in_size) {
             my_start_vertex = my_rank;
@@ -41,10 +44,12 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
           my_end_vertex = front_in_size;
       }
     }
+    // printf("Rank: %d, my_work: %d\n", my_rank, my_end_vertex - my_start_vertex);
     // printf("Rank: %d, front_in_size: %d, my_start_vertex: %d, my_end_vertex: %d\n\n", my_rank, front_in_size, my_start_vertex, my_end_vertex);
     // MPI_Barrier(MPI_COMM_WORLD);
 
     std::vector<int> send_indices;
+    std::vector<int> depths;
     for (int v = my_start_vertex; v < my_end_vertex; v++) {
       int vertex = frontier_in[v];
 
@@ -55,20 +60,14 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
           result[neighbor] = depth + 1;
           frontier_out[front_out_size] = neighbor;
           send_indices.push_back(neighbor);
+          depths.push_back(depth + 1);
           front_out_size++;
         }
       }
     }
 
-    int num_send = send_indices.size();
-    int depths[num_send];
-    for(int i = 0; i < send_indices.size(); i++){
-        depths[i] = result[send_indices[i]];
-    }
-
     int num_sends[num_ranks];
-    // printf("Rank: %d, num_send: %d\n", my_rank, num_send);
-    MPI_Allgather(&num_send, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
+    MPI_Allgather(&front_out_size, 1, MPI_INT, num_sends, 1, MPI_INT, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
     
     int recv_size = 0;
@@ -78,13 +77,12 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
         recv_size += num_sends[i];
     }
 
-    int *recv_indices = new int[recv_size];
-    int *recv_depths = new int[recv_size];
-    MPI_Allgatherv(send_indices.data(), num_send, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-    MPI_Allgatherv(depths, num_send, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
-    MPI_Allreduce(MPI_IN_PLACE, &front_out_size, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
+    MPI_Allgatherv(send_indices.data(), front_out_size, MPI_INT, recv_indices, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
+    MPI_Allgatherv(depths.data(), front_out_size, MPI_INT, recv_depths, num_sends, displs, MPI_INT, MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
 
+    front_out_size = recv_size;
+  
     for(int i = 0; i < recv_size; i++) {
         result[recv_indices[i]] = recv_depths[i];
         frontier_out[i] = recv_indices[i];
@@ -95,14 +93,7 @@ int mpi_frontier(graph_t* graph, int start_vertex, int* result) {
     frontier_in = frontier_out;
     frontier_out = temp;
     depth++;
-
-    // printf("Rank: %d, pointer exchange is finished\n", my_rank);
-
-    delete[] recv_depths;
   }
-
-  delete[] frontier_in;
-  delete[] frontier_out; 
 
   return std::chrono::duration_cast<us>(Time::now() - start_time).count();
 }
