@@ -1,5 +1,9 @@
 # Breadth First Search
 
+## Hardware
+
+Intel(R) Xeon(R) CPU E5-2695 v4 @ 2.10GHz
+
 ## Project Structure
 
 ```bash
