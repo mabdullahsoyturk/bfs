@@ -1,0 +1,174 @@
+Setting stack size to unlimited...
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 2062698
+max locked memory       (kbytes, -l) unlimited
+max memory size         (kbytes, -m) 134217728
+open files                      (-n) 51200
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) unlimited
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 4096
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+Running Job...!
+===============================================================================
+Running compiled binary...
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                36
+On-line CPU(s) list:   0-35
+Thread(s) per core:    1
+Core(s) per socket:    18
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 79
+Model name:            Intel(R) Xeon(R) CPU E5-2695 v4 @ 2.10GHz
+Stepping:              1
+CPU MHz:               1798.945
+CPU max MHz:           3300,0000
+CPU min MHz:           1200,0000
+BogoMIPS:              4200.02
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              46080K
+NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34
+NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch epb cat_l3 cdp_l3 invpcid_single intel_pt spec_ctrl ibpb_support tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm rdt_a rdseed adx smap xsaveopt cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts
+VSP STARTS!!!
+Parallel version with 1 process
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_queue,total=1132121,avg=1105.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_naive,total=1835428,avg=1792.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_frontier,total=860268,avg=840.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_vertex_dist,total=2153702,avg=2103.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_frontier,total=1185122,avg=1157.000000
+Parallel version with 2 processes
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_queue,total=1142448,avg=1115.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_naive,total=1860265,avg=1816.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_frontier,total=865227,avg=844.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_vertex_dist,total=1331670,avg=1300.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_frontier,total=923818,avg=902.000000
+Parallel version with 4 processes
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_queue,total=1260870,avg=1231.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_naive,total=2046733,avg=1998.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_frontier,total=959178,avg=936.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_vertex_dist,total=947044,avg=924.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_frontier,total=801470,avg=782.000000
+Parallel version with 8 processes
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_queue,total=1410075,avg=1377.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_naive,total=2317791,avg=2263.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_frontier,total=1068371,avg=1043.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_vertex_dist,total=791795,avg=773.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_frontier,total=820155,avg=800.000000
+Parallel version with 16 processes
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_queue,total=1445357,avg=1411.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_naive,total=2334332,avg=2279.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,bfs_frontier,total=1097157,avg=1071.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_vertex_dist,total=703549,avg=687.000000
+vsp_msc10848_300sep_100in_1Kout.mtx,mpi_frontier,total=802476,avg=783.000000
+VSP ENDS!!!
+MYCIELSKIAN STARTS!!!
+Parallel version with 1 process
+mycielskian14.mtx,bfs_queue,total=149618,avg=146.000000
+mycielskian14.mtx,bfs_naive,total=216540,avg=211.000000
+mycielskian14.mtx,bfs_frontier,total=113557,avg=110.000000
+mycielskian14.mtx,mpi_vertex_dist,total=259302,avg=253.000000
+mycielskian14.mtx,mpi_frontier,total=157644,avg=153.000000
+Parallel version with 2 processes
+mycielskian14.mtx,bfs_queue,total=149681,avg=146.000000
+mycielskian14.mtx,bfs_naive,total=216663,avg=211.000000
+mycielskian14.mtx,bfs_frontier,total=113624,avg=110.000000
+mycielskian14.mtx,mpi_vertex_dist,total=170828,avg=166.000000
+mycielskian14.mtx,mpi_frontier,total=134433,avg=131.000000
+Parallel version with 4 processes
+mycielskian14.mtx,bfs_queue,total=164912,avg=161.000000
+mycielskian14.mtx,bfs_naive,total=238725,avg=233.000000
+mycielskian14.mtx,bfs_frontier,total=125182,avg=122.000000
+mycielskian14.mtx,mpi_vertex_dist,total=132530,avg=129.000000
+mycielskian14.mtx,mpi_frontier,total=128120,avg=125.000000
+Parallel version with 8 processes
+mycielskian14.mtx,bfs_queue,total=190305,avg=185.000000
+mycielskian14.mtx,bfs_naive,total=275345,avg=268.000000
+mycielskian14.mtx,bfs_frontier,total=144301,avg=140.000000
+mycielskian14.mtx,mpi_vertex_dist,total=139666,avg=136.000000
+mycielskian14.mtx,mpi_frontier,total=135681,avg=132.000000
+Parallel version with 16 processes
+mycielskian14.mtx,bfs_queue,total=190398,avg=185.000000
+mycielskian14.mtx,bfs_naive,total=275311,avg=268.000000
+mycielskian14.mtx,bfs_frontier,total=144340,avg=140.000000
+mycielskian14.mtx,mpi_vertex_dist,total=141153,avg=137.000000
+mycielskian14.mtx,mpi_frontier,total=131925,avg=128.000000
+MYCIELSKIAN ENDS!!!
+M14B STARTS!!!
+Parallel version with 1 process
+m14b.mtx,bfs_queue,total=180980,avg=176.000000
+m14b.mtx,bfs_naive,total=24515984,avg=23941.000000
+m14b.mtx,bfs_frontier,total=82908,avg=80.000000
+m14b.mtx,mpi_vertex_dist,total=24889528,avg=24306.000000
+m14b.mtx,mpi_frontier,total=300793,avg=293.000000
+Parallel version with 2 processes
+m14b.mtx,bfs_queue,total=182264,avg=177.000000
+m14b.mtx,bfs_naive,total=24659615,avg=24081.000000
+m14b.mtx,bfs_frontier,total=83255,avg=81.000000
+m14b.mtx,mpi_vertex_dist,total=12827561,avg=12526.000000
+m14b.mtx,mpi_frontier,total=311171,avg=303.000000
+Parallel version with 4 processes
+m14b.mtx,bfs_queue,total=196051,avg=191.000000
+m14b.mtx,bfs_naive,total=26760131,avg=26132.000000
+m14b.mtx,bfs_frontier,total=89833,avg=87.000000
+m14b.mtx,mpi_vertex_dist,total=7315340,avg=7143.000000
+m14b.mtx,mpi_frontier,total=380546,avg=371.000000
+Parallel version with 8 processes
+m14b.mtx,bfs_queue,total=217729,avg=212.000000
+m14b.mtx,bfs_naive,total=30423192,avg=29710.000000
+m14b.mtx,bfs_frontier,total=97912,avg=95.000000
+m14b.mtx,mpi_vertex_dist,total=4571151,avg=4464.000000
+m14b.mtx,mpi_frontier,total=523867,avg=511.000000
+Parallel version with 16 processes
+m14b.mtx,bfs_queue,total=241970,avg=236.000000
+m14b.mtx,bfs_naive,total=30202726,avg=29494.000000
+m14b.mtx,bfs_frontier,total=118745,avg=115.000000
+m14b.mtx,mpi_vertex_dist,total=2802405,avg=2736.000000
+m14b.mtx,mpi_frontier,total=700419,avg=684.000000
+M14B ENDS!!!
+DELAUNAY STARTS!!!
+Parallel version with 1 process
+delaunay_n17.mtx,bfs_queue,total=11843,avg=11.000000
+delaunay_n17.mtx,bfs_naive,total=4321778,avg=4220.000000
+delaunay_n17.mtx,bfs_frontier,total=4234,avg=4.000000
+delaunay_n17.mtx,mpi_vertex_dist,total=4366859,avg=4264.000000
+delaunay_n17.mtx,mpi_frontier,total=39313,avg=38.000000
+Parallel version with 2 processes
+delaunay_n17.mtx,bfs_queue,total=12306,avg=12.000000
+delaunay_n17.mtx,bfs_naive,total=4379465,avg=4276.000000
+delaunay_n17.mtx,bfs_frontier,total=4471,avg=4.000000
+delaunay_n17.mtx,mpi_vertex_dist,total=2272632,avg=2219.000000
+delaunay_n17.mtx,mpi_frontier,total=52814,avg=51.000000
+Parallel version with 4 processes
+delaunay_n17.mtx,bfs_queue,total=13162,avg=12.000000
+delaunay_n17.mtx,bfs_naive,total=4702757,avg=4592.000000
+delaunay_n17.mtx,bfs_frontier,total=4665,avg=4.000000
+delaunay_n17.mtx,mpi_vertex_dist,total=1292397,avg=1262.000000
+delaunay_n17.mtx,mpi_frontier,total=77897,avg=76.000000
+Parallel version with 8 processes
+delaunay_n17.mtx,bfs_queue,total=14637,avg=14.000000
+delaunay_n17.mtx,bfs_naive,total=5346439,avg=5221.000000
+delaunay_n17.mtx,bfs_frontier,total=5119,avg=4.000000
+delaunay_n17.mtx,mpi_vertex_dist,total=820161,avg=800.000000
+delaunay_n17.mtx,mpi_frontier,total=111352,avg=108.000000
+Parallel version with 16 processes
+delaunay_n17.mtx,bfs_queue,total=14607,avg=14.000000
+delaunay_n17.mtx,bfs_naive,total=5346817,avg=5221.000000
+delaunay_n17.mtx,bfs_frontier,total=5109,avg=4.000000
+delaunay_n17.mtx,mpi_vertex_dist,total=533187,avg=520.000000
+delaunay_n17.mtx,mpi_frontier,total=151609,avg=148.000000
+DELAUNAY ENDS!!!
